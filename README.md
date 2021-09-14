@@ -1,1 +1,2 @@
-# Langton's Ant Algorithm 
+# Lark's Ant
+
