@@ -109,9 +109,8 @@ function start_bot() {
     // The ant will always start facing up
     dir = ANT_UP; 
 
-    // TODO: FIX Ant will always start at the middle of the board
-    dx = 1; // Our first element will be white so we turn right
-    dy = 0; // This stays at 0
+    // Our first move is always going to move left because of our countdown
+    get_dir_left();
     
     let x = (dx + g_bot.x + g_box.wid) % g_box.wid; // Move-x.  Ensure positive b4 mod.
     let y = (dy + g_bot.y + g_box.hgt) % g_box.hgt; // Ditto y.
@@ -127,14 +126,14 @@ function start_bot() {
     g_bot.color = color;    // Initialize the color to Black
 
     // Update our color_coord array to hold the coordinates of the cell and its color val
-    color_coord[[x, y]] = color;
+    color_coord[[g_bot.x, g_bot.y]] = color;
 
     update_timer();
-    
+
     // reset dx and dy
     dx = 0;
     dy = 0;
-    
+
     // Log actions into the console, ins't necessary but helpful for debugging 
     console.log( "bot x,y,dir,clr = " + x + "," + y + "," + dir + "," +  color );
 }
@@ -146,47 +145,37 @@ function move_bot() { // Move the bot in new direction & update color.
 
     let color = color_coord[[g_bot.x, g_bot.y]];
 
-
     // NOTE: Our FSM switch is based on a countdown that makes the ant move positions
     //       The countdown is 0 -> 1 -> 2 -> 1 -> 0 -> ...
     // Change the direction of the Ant based on the color of the square its on
     // TODO: Add color var to be passed in the fuction for our FSM to read in the information
     switch(timer) { // Convert dir to x,y deltas: dir = clock w 0=Up,2=Right,4=Down,6=Left. 
         // TODO: match the arrangement of the switch cases to match the pdf format
-        case 0: { // Move Left
+        // TODO: I think my movement error is here
+        case LEFT: { // Move Left
             // TODO: Change the direction of the Ant to face Left 
-            if(dir === 0){  // If we subtract one to dir while at 0, we get -1 which is out of
+            if(dir === ANT_UP){  // If we subtract one to dir while at 0, we get -1 which is out of
                 dir = ANT_LEFT; // range so we reset it back to LEFT, which is 3
             }
             else {
-                --dir;      // if dir is not at 0, subtract one normally
+                --dir;          // if dir is not at 0, subtract one normally 
             }
             get_dir_left();
             break; 
         }
-        case 1: { // Move Right
+        case RIGHT: { // Move Right
             // TODO: Change the direction of the Ant to face Left 
-            if(dir === 0){
-                dir = LEFT;
+            if(dir === ANT_LEFT){
+                dir = ANT_UP;
             }
             else {
                 ++dir;      // if dir is not at 0, subtract one normally
             }
-            // TODO: erase this after the code is working properly, idk if we will need this
-            // if(dir === -1) { dir += 4; } // TODO: TEST THIS { dir = LEFT; }
             get_dir_right();
             break; 
         } 
-        case 2: { // Move Straight
-            // TODO: Change the direction of the Ant to face Right
-            if(dir === 3){  // If we add one to dir while at 3, we get 4 which is out of
-                dir = ANT_UP;   // range so we reset it back to UP, which is 0
-            }
-            else {
-                dir;      // if dir is not at 3, add one normally
-            }
-            // TODO: erase this after the code is working properly, idk if we will need this
-            // if(dir === 4) { dir -= 4; } // TODO: TEST THIS { dir = UP; }
+        case STRAIGHT: { // Move Straight
+            // Dont change the direction of the Ant
             get_dir_straight();
             break; 
         }
@@ -215,13 +204,13 @@ function move_bot() { // Move the bot in new direction & update color.
 function update_timer() {
     if(timer_swap === false) {
         ++timer;
-        if(timer === 2) {
+        if(timer === STRAIGHT) {
             timer_swap = true;
         }
     }
     if(timer_swap === true) {
         --timer;
-        if(timer === 0) {
+        if(timer === LEFT) {
             timer_swap = false;
         }
     }
@@ -338,56 +327,35 @@ function draw_bot() // Convert bot pos to grid pos & draw bot cell.
 
     // TODO: keeps running else case after 3rd run
 
-    let color = color_coord[[g_bot.x, g_bot.y]];
+    let color = color_coord[[x_in, y_in]];
+
+    console.log(color);
+
     switch(color) { // Convert dir to x,y deltas: dir = clock w 0=Up,2=Right,4=Down,6=Left. 
         // TODO: match the arrangement of the switch cases to match the pdf format
         case BLACK: { 
             // change to next color
-            color_coord[[g_bot.x, g_bot.y]] = BLUE;
+            //color_coord[[g_bot.x, g_bot.y]] = BLUE;
+            fill(BLUE);
             break; 
         }
         case BLUE: { 
-            color_coord[[g_bot.x, g_bot.y]] = YELLOW;
+            //color_coord[[g_bot.x, g_bot.y]] = YELLOW;
+            fill(YELLOW);
             break; 
         } 
         case YELLOW: { 
-            color_coord[[g_bot.x, g_bot.y]] = RED;
+            //color_coord[[g_bot.x, g_bot.y]] = RED;
+            fill(RED);
             break; 
         } 
         case RED: { 
-            color_coord[[g_bot.x, g_bot.y]] = BLACK;
+            //color_coord[[g_bot.x, g_bot.y]] = BLACK;
+            fill(BLACK);
             break; 
         } 
-        default: {
-            // TODO: Make a default if needed, otherwise delete
-        }
     }
 
-
-    for(let i = 0; i < 4; ++i) {
-        if(color_coord[[g_bot.x, g_bot.y]] === COLORS[i] && i != 3) {
-            fill(COLORS[i+1]);
-            // make a variable to hold location
-            break;
-        }
-        else {
-            fill(COLORS[0]);
-        }
-    }
-    
-    /*  NOTE: Keep this here for reference 
-        TODO: delete after
-    for(let i = 0; i < 4; ++i) {
-        if(g_bot.color === COLORS[i] && i != 3) {
-            fill(COLORS[i+1]);
-            // make a variable to hold location
-            break;
-        }
-        else {
-            fill(COLORS[3]);
-        }
-    } 
-    */
     
     
     //fill("#" + g_bot.color); // Concat string, auto-convert the number to string.
@@ -474,4 +442,5 @@ function mousePressed() // P5 fcn, called for every mouse-press.
     set_bot_pos();
     draw_bot();
 }
+
 
