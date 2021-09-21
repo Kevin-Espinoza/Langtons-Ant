@@ -129,6 +129,8 @@ function start_bot() {
     // Update our color_coord array to hold the coordinates of the cell and its color val
     color_coord[[x, y]] = color;
 
+    update_timer();
+    
     // reset dx and dy
     dx = 0;
     dy = 0;
