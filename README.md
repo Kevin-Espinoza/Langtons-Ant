@@ -6,7 +6,7 @@ Project 1: Larks Ant
 
 Team:
 Kevin Espinoza,
-Tina Chao,
+Tina Cao,
 Shivangi Shakya,
 Daniel Yi
 
