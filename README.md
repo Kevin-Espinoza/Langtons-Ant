@@ -4,9 +4,9 @@ CPSC 335-03
 Project 1: Larks Ant
 
 Team:
-Kevin Espinoza
-Tina Chao
-Shivangi Shakya
+Kevin Espinoza,
+Tina Chao,
+Shivangi Shakya,
 Daniel Yi
 
 External Requirements: None.
