@@ -1,0 +1,13 @@
+body {
+    text-align: center;
+    font-family: sans-serif;
+}
+canvas {
+    background-color: black;
+}
+
+.authors{
+    position: relative;
+    left: 200px;
+    font-family: sans-serif;
+}
