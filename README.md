@@ -3,16 +3,22 @@
 CPSC 335-03
 Project 1: Larks Ant
 
+
 Team:
 Kevin Espinoza,
 Tina Chao,
 Shivangi Shakya,
 Daniel Yi
 
+
 External Requirements: None.
+
 Setup and Installation: Just unzip the folder.
+
 Features: The program should be running correctly and has no errors. There is a sample image attached to the program files. 
+
 Bugs: None.
+
 
 Project Instructions:
 The Larks Ant
