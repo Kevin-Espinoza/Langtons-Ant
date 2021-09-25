@@ -14,7 +14,7 @@
 //*****************************************************************************************************************************
 //  Author information
 //  Author name: Kevin Espinoza
-//  Author email: k.espinoza1012@gmail.com
+//  Author GitHub: https://github.com/Kevin-Espinoza
 //  Lark's Ant
 //
 //  File Name: main.js
