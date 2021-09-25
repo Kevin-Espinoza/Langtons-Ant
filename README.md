@@ -25,18 +25,18 @@ state, a countdown. (Larks, or LRCS, means Left-Right-Countdown-Straight.) This 
 Straight-Countdown.
 -Third, the bot FSM is in one of 3 states/modes: Normal or Straight or Countdown mode.
 Here is the Larks ant brain FSM processing in detail:
-1. Read the cell's color, translate to its color sequence index.
-2. Obtain the action given the color index
-If FSM is in Normal mode and an L/R action then
- 3a. Store index in the FSM counter // Just in case the next cell wants us to go Straight
- 3b. Change nose direction accordingly
-Else If FSM is in Normal mode and a Countdown-Straight action then
- 3. Change to Countdown mode & don't change direction
-Else if FSM is in Countdown Mode then // we'll go straight, no change in direction
- 3a. If FSM counter is non-positive, then change FSM to Normal Mode
- 3b. Decrement the FSM counter & don't change direction
-4. Increment cell's color modulo the number of colors // ie, with wraparound
-5. Move to neighbor cell // in nose direction
+ 1. Read the cell's color, translate to its color sequence index.
+ 2. Obtain the action given the color index
+ If FSM is in Normal mode and an L/R action then
+  3a. Store index in the FSM counter // Just in case the next cell wants us to go Straight
+  3b. Change nose direction accordingly
+ Else If FSM is in Normal mode and a Countdown-Straight action then
+  3. Change to Countdown mode & don't change direction
+ Else if FSM is in Countdown Mode then // we'll go straight, no change in direction
+  3a. If FSM counter is non-positive, then change FSM to Normal Mode
+  3b. Decrement the FSM counter & don't change direction
+ 4. Increment cell's color modulo the number of colors // ie, with wraparound
+ 5. Move to neighbor cell // in nose direction
 So, the Larks ant is a bit more complex than the TP ant. Sometimes it decides to go straight based on the cell
 color index (for a count indicated by the previous cell it had been in), and while it goes straight it doesn't try to
 turn until it's finished counting down to zero.
