@@ -37,6 +37,7 @@ Here is the Larks ant brain FSM processing in detail:
   3b. Decrement the FSM counter & don't change direction
  4. Increment cell's color modulo the number of colors // ie, with wraparound
  5. Move to neighbor cell // in nose direction
+
 So, the Larks ant is a bit more complex than the TP ant. Sometimes it decides to go straight based on the cell
 color index (for a count indicated by the previous cell it had been in), and while it goes straight it doesn't try to
 turn until it's finished counting down to zero.
